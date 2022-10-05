@@ -1,5 +1,5 @@
 # Ansible-Aws-Ubuntu-Apache-PHP
-> ![Ansible image](./ansible.png) 
+> <img src="./ansible.png" alt="Ansible image">
 <br>
 
 ## Table of content
@@ -9,10 +9,10 @@
 - [Author](#author)
 
 ## Overview
- > ### Setting up Apache and PHP on AWS with Ansible Playbook Using Ubuntu 22.04 AMI as the target machine and Ubuntu 20.04 and vagrant as the control node. Ansible is a simple and powerful automation engine. It is used to help with configuration management, application deployment, and task automation. 
+ > ### Setting up Apache and PHP on AWS with Ansible Playbook Using Ubuntu 22.04 AMI as the target machine and Ubuntu 20.04 as the control node. Ansible is a simple and powerful automation engine. It is used to help with configuration management, application deployment, and task automation. 
 <br>
 
-> ### In this write up I will show you how to set up an apache server, and host a simple php file on the server using ansible playbook. This guide assumes that you already have ansible installed on your control node. 
+> ### In this write up I will show you how to set up an apache server, and host a simple php file on the server using ansible playbook. 
 <br>
 
 > ### This is done using Ubuntu 22.04 AMI (virtual machine) on AWS. 
@@ -39,7 +39,7 @@
 <br>
 <br>
 
-## The following are the links to Ansible playbook, index.php file and Vagrantfile. 
+## The following are the links to Ansible playbook and index.php file.
  - [Ansible Playbook](./ec2-apache.yml)
  - [Index.php file](./index.php)
 
@@ -62,13 +62,13 @@ $ ansible --version
 <br>
 
 
-## Create ssh key pair 
+## Create ssh key pairs 
 #### Run the following command :
 
 ```bash
 $ ssh-keygen -m rsa PEM
 ```
-## Note: when prompted give it a passphrase of a minimum of 5 characters (required)
+### Note: when prompted give it a passphrase of a minimum of 5 characters (required)
 <img src="./images/keygen1.JPG">
 <img src="./images/keygen2.JPG">
 
@@ -79,66 +79,87 @@ $ mv /home/vagrant/.ssh/vagrantkeys /home/vagrant/.ssh/vagrantkeys.pem
 <img src="./images/keygen4.JPG">
 
 ## Now, log into AWS console and import the public keys.
-Click on servicesc, type EC2 in the searchbox and select EC2 from the services menu.
-<img src="./images/create-instance1 (2).jpg">
-On EC2 dashboard, click on keypairs.
-<img src="./images/create-instance2.jpg">
-Click on Actions and select "import key pair" from the drop-down menu.
-<img src="./images/create-instance3.jpg">
-Enter the name of your keys
-<img src="./images/create-instance4.jpg">
-copy your public keys here.
-<img src="./images/create-instance5.jpg">
+### Click on servicesc, type EC2 in the searchbox and select EC2 from the services menu.
+<img src="./images/create-instance1.jpg">
+
+### On EC2 dashboard, click on keypairs.
+<img src="./images/create-instance2.JPG">
+
+### Click on Actions and select "import key pair" from the drop-down menu.
+<img src="./images/create-instance3.JPG">
+
+### Enter the name of your keys
+<img src="./images/create-instance4.JPG">
+
+### copy your public keys here.
+<img src="./images/create-instance5.JPG">
 <img src="./images/keygen3.JPG">
-Click on import key pair
+
+### Click on import key pair
 <img src="./images/create-instance6.jpg">
-<img src="./images/create-instance7.jpg">
+<img src="./images/create-instance7.JPG">
 
 
 ## Create an EC2 instance using Ubuntu 22.04 (target machine)
-Click on instances
-<img src="./images/create-instance8.jpg">
-Click on launch instances at the top of the console.
-<img src="./images/create-instance9.jpg">
-Give your instance a name
-<img src="./images/create-instance10.jpg">
-Scroll down to Amazon machine images (AMI). Select ubuntu. Leave it at the free tier eligible. (If you are on free-tier, preferable choose machines that have free tier eligibility to save cost.)
-<img src="./images/create-instance11.jpg">
+### Click on instances
+<img src="./images/create-instance8.JPG">
+
+### Click on launch instances at the top of the console.
+<img src="./images/create-instance9.JPG">
+
+### Give your instance a name
+<img src="./images/create-instance10.JPG">
+
+### Scroll down to Amazon machine images (AMI). Select ubuntu. Leave it at the free tier eligible. (If you are on free-tier, preferable choose machines that have free tier eligibility to save cost.)
+<img src="./images/create-instance11.JPG">
 <img src="./images/create-instance11a.jpg">
-Scroll down to Instance type ans choose t2.micro
+
+### Scroll down to Instance type ans choose t2.micro
 <img src="./images/create-instance11b.jpg">
-Scroll down to Key pair (login) Enter the name of our key pair.
-<img src="./images/create-instance12.jpg">
-Scroll down to Network settings, go to "create security groups"click on it.
-<img src="./images/create-instance13.jpg">
-Scroll down and check the boxes to allow ssh traffic and other ports. 
-<img src="./images/create-instance14.jpg">
-Scroll down to summary.Enter the number of instances you want to create. Review your choices. Click on Launch instance.
-<img src="./images/create-instance15.jpg">
-Click on "view all instances"
+
+### Scroll down to Key pair (login) Enter the name of our key pair.
+<img src="./images/create-instance12.JPG">
+
+### Scroll down to Network settings, go to "create security groups"click on it.
+<img src="./images/create-instance13.JPG">
+
+### Scroll down and check the boxes to allow ssh traffic and other ports. 
+<img src="./images/create-instance14.JPG">
+
+### Scroll down to summary.Enter the number of instances you want to create. Review your choices. Click on Launch instance.
+<img src="./images/create-instance15.JPG">
+
+### Click on "view all instances"
 <img src="./images/create-instance16.jpg">
-<img src="./images/create-instance17.jpg">
-When your instance has been successfully created, click on "connect" at the top of the dashboard.
-<img src="./images/create-instance19.jpg">
-Click on SSH client. Copy the example below.
-<img src="./images/create-instance20.jpg">
-Paste the command on your terminal. This allows you to connect with your EC2 instance using ssh connection.
-Note: do this at the ssh path where you have your keypairs stored so that the connecton can discover the keys.
-<img src="./images/create-instance21.jpg">
-<img src="./images/create-instance21a.jpg">
-<img src="./images/create-instance21b.jpg">
-After successful connection. Exit.
+<img src="./images/create-instance17.JPG">
+
+### When your instance has been successfully created, click on "connect" at the top of the dashboard.
+<img src="./images/create-instance19.JPG">
+
+### Click on SSH client. Copy the example below.
+<img src="./images/create-instance20.JPG">
+
+### Paste the command on your terminal. This allows you to connect with your EC2 instance using ssh connection.
+
+#### Note: do this at the ssh path where you have your keypairs stored so that the connecton can discover the keys.
+<img src="./images/create-instance21.JPG">
+<img src="./images/create-instance21a.JPG">
+<img src="./images/create-instance21b.JPG">
+
+### After successful connection. Exit.
 
 
 ## Edit the /etc/ansible/hosts file adding the IP address of the target marchine.
-First,copy the IP address and the user name of your AWS Ubuntu server.
+
+### First,copy the IP address and the user name of your AWS Ubuntu server.
 <img src="./images/create-instance22.JPG">
 
 #### Now Run the following command:
 ```console
 $ sudo nano /etc/ansible/hosts
 ```
-Edit your host file with the IP address, user name and the path to the key pairs.
+
+### Edit your host file with the IP address, user name and the path to the key pairs.
 <img src="./images/create-instance23.JPG">
 <br>
 <br> 
