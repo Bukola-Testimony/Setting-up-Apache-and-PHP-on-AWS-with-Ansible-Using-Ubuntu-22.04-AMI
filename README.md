@@ -1,5 +1,5 @@
 # Ansible-Aws-Ubuntu-Apache-PHP
-> <img src="./ansible.png" alt="Ansible image">
+> <img src="../ansible.png" alt="Ansible image">
 <br>
 
 ## Table of content
