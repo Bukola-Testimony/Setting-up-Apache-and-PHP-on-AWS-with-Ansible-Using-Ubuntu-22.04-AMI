@@ -4,8 +4,8 @@
 
 ## Table of content
 - [Overview](#overview) 
-- [Task](#Task-EXERCISE-8) 
-- [My process](#my-process)
+- [Process](#my-process)
+- [Link to files](#The-following-are-the-links-to-Ansible-playbook-index.php-file-and-Vagrantfile)
 - [Author](#author)
 
 ## Overview
@@ -20,10 +20,11 @@
 <br>
 
 ## Process
-- Create ssh key pair on control node (In this case I used virtual Ubuntu 20.04 with vagrant). 
+- Install ansible on the control node(In this case I used an Ubuntu 20.04 VM created with vagrant).  
+- Create ssh key pairs.
 - Import the public key to AWS. 
 - Creat an EC2 instance using Ubuntu 22.04 (target machine)
-- Then I connected with the target machine through ssh then exit.
+- Connect with the target machine through ssh then exit.
 - Edit the /etc/ansible/hosts file adding the IP address of the target machine.
 - After all was done, I pinged the ansible inventory to be sure all configurations are set properly
 - Create a directory for the ansible.
@@ -39,27 +40,13 @@
 <br>
 
 ## The following are the links to Ansible playbook, index.php file and Vagrantfile. 
- - [Ansible Playbook](./ansible-apache.yml)
+ - [Ansible Playbook](./ec2-apache.yml)
  - [Index.php file](./index.php)
 
 <br> 
 <br>
 
-
-## Created ssh-keygen on the master-VM and copied it into the slave-VM. 
-#### Run the following command :
-
-```bash
-$ ssh-keygen -t rsa 
-#To generate ssh keys. Preferably give it a passphrase when prompted.
-$ ssh-copy-id -i <remote-host IP address> vagrant@192.168.56.9
-#To copy public keys into the remote server.
-$ ssh <remote-host IP address> vagrant@192.168.56.9
-#To connect with the remote server.
-
-```
-
-## To install ansible and check ansible version:
+## To Install ansible on the control node (In this case I used an Ubuntu 20.04 VM created with vagrant). 
 #### Run the following command:
  
 ```bash
@@ -69,19 +56,90 @@ $ sudo apt install -y ansible
 $ ansible --version
 
 ```
-<img src="./images/Ansible-version.JPG">
+<img src="./images/ansible-version.png">
 
 <br>
 <br>
+
+
+## Create ssh key pair 
+#### Run the following command :
+
+```bash
+$ ssh-keygen -m rsa PEM
+```
+## Note: when prompted give it a passphrase of a minimum of 5 characters (required)
+<img src="./images/keygen1.JPG">
+<img src="./images/keygen2.JPG">
+
+## change the private key to an extention of PEM.
+```bash
+$ mv /home/vagrant/.ssh/vagrantkeys /home/vagrant/.ssh/vagrantkeys.pem
+```
+<img src="./images/keygen4.JPG">
+
+## Now, log into AWS console and import the public keys.
+Click on servicesc, type EC2 in the searchbox and select EC2 from the services menu.
+<img src="./images/create-instance1 (2).jpg">
+On EC2 dashboard, click on keypairs.
+<img src="./images/create-instance2.jpg">
+Click on Actions and select "import key pair" from the drop-down menu.
+<img src="./images/create-instance3.jpg">
+Enter the name of your keys
+<img src="./images/create-instance4.jpg">
+copy your public keys here.
+<img src="./images/create-instance5.jpg">
+<img src="./images/keygen3.JPG">
+Click on import key pair
+<img src="./images/create-instance6.jpg">
+<img src="./images/create-instance7.jpg">
+
+
+## Create an EC2 instance using Ubuntu 22.04 (target machine)
+Click on instances
+<img src="./images/create-instance8.jpg">
+Click on launch instances at the top of the console.
+<img src="./images/create-instance9.jpg">
+Give your instance a name
+<img src="./images/create-instance10.jpg">
+Scroll down to Amazon machine images (AMI). Select ubuntu. Leave it at the free tier eligible. (If you are on free-tier, preferable choose machines that have free tier eligibility to save cost.)
+<img src="./images/create-instance11.jpg">
+<img src="./images/create-instance11a.jpg">
+Scroll down to Instance type ans choose t2.micro
+<img src="./images/create-instance11b.jpg">
+Scroll down to Key pair (login) Enter the name of our key pair.
+<img src="./images/create-instance12.jpg">
+Scroll down to Network settings, go to "create security groups"click on it.
+<img src="./images/create-instance13.jpg">
+Scroll down and check the boxes to allow ssh traffic and other ports. 
+<img src="./images/create-instance14.jpg">
+Scroll down to summary.Enter the number of instances you want to create. Review your choices. Click on Launch instance.
+<img src="./images/create-instance15.jpg">
+Click on "view all instances"
+<img src="./images/create-instance16.jpg">
+<img src="./images/create-instance17.jpg">
+When your instance has been successfully created, click on "connect" at the top of the dashboard.
+<img src="./images/create-instance19.jpg">
+Click on SSH client. Copy the example below.
+<img src="./images/create-instance20.jpg">
+Paste the command on your terminal. This allows you to connect with your EC2 instance using ssh connection.
+Note: do this at the ssh path where you have your keypairs stored so that the connecton can discover the keys.
+<img src="./images/create-instance21.jpg">
+<img src="./images/create-instance21a.jpg">
+<img src="./images/create-instance21b.jpg">
+After successful connection. Exit.
+
 
 ## Edit the /etc/ansible/hosts file adding the IP address of the target marchine.
+First,copy the IP address and the user name of your AWS Ubuntu server.
+<img src="./images/create-instance22.JPG">
 
-#### Run the following command:
-
+#### Now Run the following command:
 ```console
 $ sudo nano /etc/ansible/hosts
 ```
-<img src="./images/etc-ansible-hosts-file.JPG">
+Edit your host file with the IP address, user name and the path to the key pairs.
+<img src="./images/create-instance23.JPG">
 <br>
 <br> 
 
@@ -93,7 +151,7 @@ $ sudo nano /etc/ansible/hosts
 $ ansible all -m ping
  
 ```
-<img src="./images/ansible-ping.JPG">
+<img src="./images/create-instance24.JPG">
 
 <br>
 <br>
@@ -105,39 +163,42 @@ $ ansible all -m ping
 #### Run the following command:
 
 ```console
-$  nano php.yml   
+$  nano playbook.yml   
 
 ```
-<img src="./images/php-yml-file1.JPG">
-<img src="./images/php-yml-file2.JPG">
-<img src="./images/php-yml-file3.JPG">
-<br> 
-<br> 
+<img src="./images/Playbook1.png ">
+<img src="./images/Playbook2.png ">
+<img src="./images/Playbook3.png ">
+<br
  
 
-## Run a check on the playbook to check if the syntax is written correctly.
+## Run a check on the playbook to check if the syntax is written correctly. Run this check at the path where you created the playbook.
 #### Run the following command :
 
 ```console
-$ ansible-playbook php.yml --check
+$ ansible-playbook playbook.yml --check
 
 ```
 <img src="./images/phpplaybook-check1.JPG">
 <img src="./images/phpplaybook-check2.JPG">
+<img src="./images/phpplaybook-check3.JPG">
 <br>
 
 
-## Execute the playbook 
+## To execute the playbook 
 #### run the following command:
 ```console
-$ ansible-playbook php.yml
+$ ansible-playbook playbook.yml
 
 ```
-<img src="./images/phpplaybook-run1.JPG">
-<img src="./images/phpplaybook-run2.JPG">
+<img src="./images/playbook-run1.JPG">
+<img src="./images/playbook-run2.JPG">
+<img src="./images/playbook-run3.JPG">
+<img src="./images/playbook-run4.JPG">
 
 
-## create an index.php file in the localhost and edit the file.
+
+## Create an index.php file and edit the file.
 
 ```console
 $  touch index.php   
@@ -162,14 +223,14 @@ $  ansible-playbook indexphp.yml --check
 $  ansible-playbook indexphp.yml
 #To execute the playbook
 ```
-<img src="./images/indexphp-playbook-new.JPG">
+<img src="./images/Playbook4.png">
 <img src="./images/copy indexphp-playbook-check.JPG">
 <img src="./images/copy indexphp-run.JPG">
 <br>
 
 
 
-## When the playbook has been executed, check from the terminal if it was deployed properly.
+## When the playbook has been executed, check from your control node if it was deployed properly on the target machine.
 #### Run the following command:
 
 ```console
@@ -187,40 +248,24 @@ $  php index.php
 <img src="./images/execute-php-file-on-terminal.JPG">
 <br>
 
-## After executing all the playbooks (both apache2 server and indexphp) open the remote server, check if the apache and php has been installed correctly.
-#### run the following command:
- 
-```bash
-$ apache2 -v
-#To check apache version
-$ php  -v
-#To check php version
-```
-<img src="./images/apache-php-version.JPG">
+## After executing all the playbooks (For the apache2 server ,PHP and index.php file), Copy the IP address of your remote server (Ubuntu AWS AMI) and paste it on your browser. You should see the default index.html file hosted on the server.
+
+<img src="./images/Rendered-page1.JPG">
+<br>
 
 
-
-### To check if the apache is running.
-#### run the following command:
-```console
-$ systemctl status apache2
-
-```
-<img src="./images/status-apache2.JPG">
-<br> 
-
-##  Copy the ip address and paste on your browser. You should see the default index.html file hosted on the server. Edit the apache cofig file to host the index.php file instead of the index.html file.
+ ## Edit the apache config file to host the index.php file instead of the index.html file.
 #### run the following command:
 ```console
 $ sudo nano /etc/apache2/mods-enabled/dir.conf
 
 ```
 ### from the screenshot, note the order of file extentions.
-<img src="./images/apache-config-file1.JPG">
+<img src="./images/apache-config.JPG">
 <br>
 
-### change the order of file extentions to make index.php file come first. Save and close 
-<img src="./images/apache-config-file-2.JPG">
+### change the order of file extentions to make index.php file come first. Save and close. 
+<img src="./images/apache-config-edited.JPG">
 <br>
 <br>
 
@@ -229,14 +274,14 @@ $ sudo nano /etc/apache2/mods-enabled/dir.conf
 ```console
 $ sudo systemctl restart apache2
 $ systemctl status apache2
-
 ```
 <img src="./images/restart-apache.JPG">
 <br>
 
+
 ## Refresh the web browser.
 ### Screenshot of the rendered page.
-<img src="./images/rendered-page.JPG">
+<img src="./images/Rendered-page-php.JPG">
 
 <br>
 <br>

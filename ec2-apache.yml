@@ -37,7 +37,7 @@
     - name: Get status of timezone
       command: timedatectl
 
-    #Install php7.4
+    #Install php8.1
     - name: install software packages
       command: apt install software-properties-common
      
