@@ -200,9 +200,9 @@ $  nano playbook.yml
 $ ansible-playbook playbook.yml --check
 
 ```
-<img src="./images/phpplaybook-check1.JPG">
-<img src="./images/phpplaybook-check2.JPG">
-<img src="./images/phpplaybook-check3.JPG">
+<img src="./images/Playbook-check1.JPG">
+<img src="./images/Playbook-check2.JPG">
+<img src="./images/Playbook-check3.JPG">
 <br>
 
 
