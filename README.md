@@ -1,5 +1,6 @@
 # Ansible-Aws-Ubuntu-Apache-PHP
-> <img src="../ansible.png" alt="Ansible image">
+
+> <img src="./images/ansible.png">
 <br>
 
 ## Table of content
@@ -194,15 +195,16 @@ $  nano playbook.yml
  
 
 ## Run a check on the playbook to check if the syntax is written correctly. Run this check at the path where you created the playbook.
+
 #### Run the following command :
 
 ```console
 $ ansible-playbook playbook.yml --check
 
 ```
-<img src="./images/Playbook-check1.JPG">
-<img src="./images/Playbook-check2.JPG">
-<img src="./images/Playbook-check3.JPG">
+<img src="./images/playbook-check1.JPG">
+<img src="./images/playbook-check2.JPG">
+<img src="./images/playbook-check3.JPG">
 <br>
 
 
