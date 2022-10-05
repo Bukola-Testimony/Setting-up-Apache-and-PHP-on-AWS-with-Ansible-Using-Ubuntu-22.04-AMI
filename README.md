@@ -97,7 +97,7 @@ $ mv /home/vagrant/.ssh/vagrantkeys /home/vagrant/.ssh/vagrantkeys.pem
 <img src="./images/keygen3.JPG">
 
 ### Click on import key pair
-<img src="./images/create-instance6.jpg">
+<img src="./images/create-instance6.JPG">
 <img src="./images/create-instance7.JPG">
 
 
