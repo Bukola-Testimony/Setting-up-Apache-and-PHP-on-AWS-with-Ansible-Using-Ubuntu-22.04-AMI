@@ -21,22 +21,22 @@
 <br>
 
 ## Process
-- Install ansible on the control node(In this case I used an Ubuntu 20.04 VM created with vagrant).  
+- Install ansible on the control node(In this case I used an Ubuntu 20.04 VM created with vagrant on my windows machine).  
 - Create ssh key pairs.
 - Import the public key to AWS. 
 - Creat an EC2 instance using Ubuntu 22.04 (target machine)
 - Connect with the target machine through ssh then exit.
 - Edit the /etc/ansible/hosts file adding the IP address of the target machine.
-- After all was done, I pinged the ansible inventory to be sure all configurations are set properly
+- Ping the ansible inventory to be sure all configurations are set properly
 - Create a directory for the ansible.
 - Cd into the ansible directory.
-- Created a playbook to install apache, set the time zone to Africa/lagos and install php then ran a check on the playbook.
-- Executed the playbook file. 
-- Check the result in the target machine to see if the installations were deployed, and check the apache service to confirm it is working fine. 
+- Create a playbook to install apache, set the time zone to Africa/lagos and install php then run a check on the playbook.
+- Execute the playbook file. 
+- Check the result in the target machine to see if the installations were deployed properly, and check the apache service to confirm it is working fine. 
 - Create and edit an index.php file.
-- Using ansible playbook, I copied the index.php file from the localhost to the remote server.
+- Using ansible playbook, copy the index.php file from the localhost to the remote server.
 - Edit the apache config file on the remote server.
-- Check the rendered page on my browser.
+- Check the rendered page on your browser.
 <br>
 <br>
 
